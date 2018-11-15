@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import axios from 'axios';
 import styles from '../styles/App.css';
 import Monday from './Monday.jsx';
 import Tuesday from './Tuesday.jsx';
@@ -17,6 +18,16 @@ class App extends React.Component {
     this.state = {
 
     }
+  }
+
+  componentDidMount() {
+    axios.get('/routine')
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {

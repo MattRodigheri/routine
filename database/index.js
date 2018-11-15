@@ -6,13 +6,15 @@ var connection = mysql.createConnection({
   database : 'routine'
 });
 
-// const saveRoutine = function(input, callback) {
-//   connection.query(`insert into ;`, function (err, data) {
-//     if (err) {
-//       callback(err, null);
-//     }
-//   });
-// }
+const saveRoutine = function(input, callback) {
+  var day = '';
+  var exercises = '';
+  connection.query(`insert into ${day} () values ();`, function (err, data) {
+    if (err) {
+      callback(err, null);
+    }
+  });
+}
 
 const getRoutine = function(callback) {
   connection.query(`select * from monday;`, function (err, data) {
@@ -25,5 +27,5 @@ const getRoutine = function(callback) {
 }
 
 
-// module.exports.saveRoutine = saveRoutine;
+module.exports.saveRoutine = saveRoutine;
 module.exports.getRoutine = getRoutine;
