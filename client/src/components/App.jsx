@@ -17,16 +17,21 @@ class App extends React.Component {
 
     this.state = {
       day: moment().format('dddd'),
-      workout: [],
-      exercises: []
+      workout: []
     }
   }
 
   componentDidMount() {
+    var workout = [];
     axios.get('/routine', { headers: { day: this.state.day } })
     .then((response) => {
+      for (var exercise in response.data[0]) {
+        if (response.data[0][exercise]) {
+          workout.push(response.data[0][exercise])
+        }
+      }
       this.setState({
-        workout: response.data[0]
+        workout: workout
       })
     })
     .catch((error) => {
@@ -35,16 +40,13 @@ class App extends React.Component {
   }
 
   render() {
-    for (var exercise in this.state.workout) {
-      if (this.state.workout[exercise]) {
-        this.state.exercises.push(<div key={this.state.workout[exercise]} className='exercise'>{this.state.workout[exercise]}</div>)
-      }
-    }
-
+    var exercises = this.state.workout.map((exercise, index) => {
+      return <div key={index}>{exercise}</div>
+    })
     return (
       <div>
         <h1>{this.state.day}</h1>
-        <div>{this.state.exercises}</div>
+        <div className='exercise'>{exercises}</div>
       </div>
     )
   }
