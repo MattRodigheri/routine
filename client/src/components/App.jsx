@@ -16,49 +16,35 @@ class App extends React.Component {
     super();
 
     this.state = {
-
+      day: moment().format('dddd'),
+      workout: [],
+      exercises: []
     }
   }
 
   componentDidMount() {
-    axios.get('/routine')
-    .then(function (response) {
-      console.log(response.data);
+    axios.get('/routine', { headers: { day: this.state.day } })
+    .then((response) => {
+      this.setState({
+        workout: response.data[0]
+      })
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
     });
   }
 
   render() {
-    var day = moment().format('dddd');
-    var workout;
-    if (day === 'Monday') {
-      workout = <Monday />
-    }
-    if (day === 'Tuesday') {
-      workout = <Tuesday />
-    }
-    if (day === 'Wednesday') {
-      workout = <Wednesday />
-    }
-    if (day === 'Thursday') {
-      workout = <Thursday />
-    }
-    if (day === 'Friday') {
-      workout = <Friday />
-    }
-    if (day === 'Saturday') {
-      workout = <Saturday />
-    }
-    if (day === 'Sunday') {
-      workout = <Sunday />
+    for (var exercise in this.state.workout) {
+      if (this.state.workout[exercise]) {
+        this.state.exercises.push(<div key={this.state.workout[exercise]} className='exercise'>{this.state.workout[exercise]}</div>)
+      }
     }
 
     return (
       <div>
-        <h1>{day}</h1>
-        <div>{workout}</div>
+        <h1>{this.state.day}</h1>
+        <div>{this.state.exercises}</div>
       </div>
     )
   }

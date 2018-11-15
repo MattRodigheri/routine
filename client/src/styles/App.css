@@ -9,3 +9,9 @@ h1 {
   font-family: Knewave;
   -webkit-text-stroke: 2px black;
 }
+
+.exercise {
+  text-align: center;
+  font-size: 2em;
+  font-family: Knewave;
+}

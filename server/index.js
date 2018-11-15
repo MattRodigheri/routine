@@ -7,7 +7,8 @@ app.use(express.static(__dirname + './../client/dist'));
 app.use(express.json());
 
 app.get('/routine', function (req, res) {
-  db.getRoutine((err, data) => {
+  // var day = req.headers.day;
+  db.getRoutine(req.headers.day, (err, data) => {
     if (err) {
       res.status(503).send(err);
     } else {

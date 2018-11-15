@@ -6,22 +6,23 @@ var connection = mysql.createConnection({
   database : 'routine'
 });
 
+const getRoutine = function(data, callback) {
+  var day = data;
+  connection.query(`select * from ${day};`, function (err, data) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, data);
+    }
+  });
+}
+
 const saveRoutine = function(input, callback) {
   var day = '';
   var exercises = '';
   connection.query(`insert into ${day} () values ();`, function (err, data) {
     if (err) {
       callback(err, null);
-    }
-  });
-}
-
-const getRoutine = function(callback) {
-  connection.query(`select * from monday;`, function (err, data) {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, data);
     }
   });
 }
