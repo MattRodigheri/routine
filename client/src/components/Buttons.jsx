@@ -8,7 +8,9 @@ class Buttons extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.props.addExerciseInput}>Add Exercise</button>
+        <button onClick={() => this.props.addExerciseInput(true)}>
+          Add Exercise
+        </button>
       </div>
     );
   }

@@ -18,17 +18,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    var workout = [];
     axios
       .get("/routine", { headers: { day: this.state.day } })
       .then(response => {
-        for (var exercise in response.data[0]) {
-          if (response.data[0][exercise]) {
-            workout.push(response.data[0][exercise]);
-          }
-        }
         this.setState({
-          workout: workout
+          workout: response.data
         });
       })
       .catch(error => {
@@ -36,20 +30,31 @@ class App extends React.Component {
       });
   }
 
-  addExerciseInput() {
+  addExerciseInput(input) {
     this.setState({
-      addExercise: true
+      addExercise: input
     });
   }
 
   render() {
-    var exercises = this.state.workout.map((exercise, index) => {
-      return <div key={index}>{exercise}</div>;
+    const exercises = this.state.workout.map((data, index) => {
+      return (
+        <div key={index}>
+          {`${data.exerciseName}: ${data.exerciseSets} sets of ${
+            data.exerciseReps
+          }`}
+        </div>
+      );
     });
     let addExercise;
 
     if (this.state.addExercise) {
-      addExercise = <AddExercise day={this.state.day} />;
+      addExercise = (
+        <AddExercise
+          day={this.state.day}
+          viewAddExercise={this.addExerciseInput}
+        />
+      );
     }
 
     return (

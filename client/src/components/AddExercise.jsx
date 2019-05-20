@@ -50,6 +50,8 @@ class AddExercise extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+
+    this.props.viewAddExercise(false);
   }
 
   render() {

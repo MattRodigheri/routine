@@ -7,8 +7,7 @@ var connection = mysql.createConnection({
 });
 
 const getRoutine = (data, callback) => {
-  var day = data;
-  connection.query(`select * from ${day};`, (err, data) => {
+  connection.query(`select * from ${data};`, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
