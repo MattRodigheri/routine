@@ -6,7 +6,7 @@ const db = require("../database/");
 app.use(express.static(__dirname + "./../client/dist"));
 app.use(express.json());
 
-app.get("/routine", function(req, res) {
+app.get("/routine", (req, res) => {
   db.getRoutine(req.headers.day, (err, data) => {
     if (err) {
       res.status(503).send(err);
@@ -14,6 +14,10 @@ app.get("/routine", function(req, res) {
       res.send(data);
     }
   });
+});
+
+app.post("/routine", (req, res) => {
+  db.addExercise(req.body);
 });
 
 app.listen(3000, () => console.log("listening on port 3000!"));

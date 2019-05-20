@@ -1,32 +1,34 @@
-var mysql = require('mysql');
+var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  database : 'routine'
+  host: "localhost",
+  user: "root",
+  database: "routine"
 });
 
-const getRoutine = function(data, callback) {
+const getRoutine = (data, callback) => {
   var day = data;
-  connection.query(`select * from ${day};`, function (err, data) {
+  connection.query(`select * from ${day};`, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
       callback(null, data);
     }
   });
-}
+};
 
-const saveRoutine = function(input, callback) {
-  var day = '';
-  var exercises = '';
-  connection.query(`insert into ${day} () values ();`, function (err, data) {
-    if (err) {
-      callback(err, null);
+const addExercise = input => {
+  connection.query(
+    `insert into ${input.day.toLowerCase()} (exerciseName, exerciseReps, exerciseSets) values ('${
+      input.exerciseName
+    }', '${input.exerciseReps}', '${input.exerciseSets}');`,
+    err => {
+      if (err) {
+        console.log(err);
+      }
     }
-  });
-}
+  );
+};
 
-
-module.exports.saveRoutine = saveRoutine;
 module.exports.getRoutine = getRoutine;
+module.exports.addExercise = addExercise;

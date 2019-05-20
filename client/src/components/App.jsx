@@ -14,7 +14,7 @@ class App extends React.Component {
       addExercise: false
     };
 
-    this.addExercise = this.addExercise.bind(this);
+    this.addExerciseInput = this.addExerciseInput.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class App extends React.Component {
       });
   }
 
-  addExercise() {
+  addExerciseInput() {
     this.setState({
       addExercise: true
     });
@@ -49,14 +49,13 @@ class App extends React.Component {
     let addExercise;
 
     if (this.state.addExercise) {
-      console.log("test");
-      addExercise = <AddExercise />;
+      addExercise = <AddExercise day={this.state.day} />;
     }
 
     return (
       <div>
         <h1>{this.state.day}</h1>
-        <Buttons addExercise={this.addExercise} />
+        <Buttons addExerciseInput={this.addExerciseInput} />
         <div>{addExercise}</div>
         <div className="exercise">{exercises}</div>
       </div>
