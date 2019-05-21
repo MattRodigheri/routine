@@ -30,6 +30,9 @@ class AddExercise extends React.Component {
           onChange={() => this.props.handleChange(event)}
         />
         <button onClick={this.props.addExerciseToDatabase}>Add</button>
+        <button onClick={() => this.props.viewAddExercise(false)}>
+          Cancel
+        </button>
       </div>
     );
   }
