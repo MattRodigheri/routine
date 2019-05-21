@@ -11,10 +11,15 @@ class App extends React.Component {
     this.state = {
       day: moment().format("dddd"),
       workout: [],
-      addExercise: false
+      addExercise: false,
+      exerciseName: "",
+      exerciseReps: "",
+      exerciseSets: ""
     };
 
     this.addExerciseInput = this.addExerciseInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addExerciseToDatabase = this.addExerciseToDatabase.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +41,53 @@ class App extends React.Component {
     });
   }
 
+  handleChange(event) {
+    if (event.target.name === "exerciseName") {
+      this.setState({
+        exerciseName: event.target.value
+      });
+    }
+
+    if (event.target.name === "reps") {
+      this.setState({
+        exerciseReps: event.target.value
+      });
+    }
+
+    if (event.target.name === "sets") {
+      this.setState({
+        exerciseSets: event.target.value
+      });
+    }
+  }
+
+  addExerciseToDatabase() {
+    axios
+      .post("/routine", {
+        day: this.state.day,
+        exerciseName: this.state.exerciseName,
+        exerciseReps: this.state.exerciseReps,
+        exerciseSets: this.state.exerciseSets
+      })
+      .then(
+        axios
+          .get("/routine", { headers: { day: this.state.day } })
+          .then(response => {
+            this.setState({
+              workout: response.data
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      )
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.addExerciseInput(false);
+  }
+
   render() {
     const exercises = this.state.workout.map((data, index) => {
       return (
@@ -53,6 +105,8 @@ class App extends React.Component {
         <AddExercise
           day={this.state.day}
           viewAddExercise={this.addExerciseInput}
+          handleChange={this.handleChange}
+          addExerciseToDatabase={this.addExerciseToDatabase}
         />
       );
     }
