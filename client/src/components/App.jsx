@@ -4,6 +4,12 @@ import axios from "axios";
 // import styles from "../styles/App.css";
 import Buttons from "./Buttons.jsx";
 import AddExercise from "./AddExercise.jsx";
+import Dropzone from "react-dropzone";
+import request from "superagent";
+
+const CLOUDINARY_UPLOAD_PRESET = "ehsddxdc";
+const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/mnr211/upload";
+
 class App extends React.Component {
   constructor() {
     super();
@@ -14,12 +20,14 @@ class App extends React.Component {
       addExercise: false,
       exerciseName: "",
       exerciseReps: "",
-      exerciseSets: ""
+      exerciseSets: "",
+      uploadedFileCloudinaryUrl: ""
     };
 
     this.addExerciseInput = this.addExerciseInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addExerciseToDatabase = this.addExerciseToDatabase.bind(this);
+    this.removeExercise = this.removeExercise.bind(this);
   }
 
   componentDidMount() {
@@ -88,13 +96,88 @@ class App extends React.Component {
     this.addExerciseInput(false);
   }
 
+  removeExercise(event) {
+    // taking too long
+    axios
+      .delete("/routine", {
+        data: {
+          day: this.state.day,
+          exercise: event.target.previousSibling.id
+        }
+      })
+      .then(
+        axios
+          .get("/routine", { headers: { day: this.state.day } })
+          .then(response => {
+            this.setState({
+              workout: response.data
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      )
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  onImageDrop(files) {
+    this.setState({
+      uploadedFile: files[0]
+    });
+
+    this.handleImageUpload(files[0]);
+  }
+
+  handleImageUpload(file) {
+    let upload = request
+      .post(CLOUDINARY_UPLOAD_URL)
+      .field("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+      .field("file", file);
+
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== "") {
+        this.setState({
+          uploadedFileCloudinaryUrl: response.body.secure_url
+        });
+      }
+    });
+  }
+
   render() {
-    const exercises = this.state.workout.map((data, index) => {
+    const exercises = this.state.workout.map((exercise, index) => {
       return (
-        <div key={index}>
-          {`${data.exerciseName}: ${data.exerciseSets} sets of ${
-            data.exerciseReps
-          }`}
+        <div key={index} draggable>
+          <span id={exercise.exerciseName}>
+            {`${exercise.exerciseName}: ${exercise.exerciseSets} sets of ${
+              exercise.exerciseReps
+            }`}
+          </span>
+          <Dropzone
+            onDrop={this.onImageDrop.bind(this)}
+            accept="image/*"
+            multiple={false}
+          >
+            {({ getRootProps, getInputProps }) => {
+              return (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {
+                    <p>
+                      Try dropping some files here, or click to select files to
+                      upload.
+                    </p>
+                  }
+                </div>
+              );
+            }}
+          </Dropzone>
+          <button onClick={() => this.removeExercise(event)}>X</button>
         </div>
       );
     });

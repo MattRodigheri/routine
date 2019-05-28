@@ -16,8 +16,12 @@ app.get("/routine", (req, res) => {
   });
 });
 
-app.post("/routine", (req, res) => {
+app.post("/routine", req => {
   db.addExercise(req.body);
+});
+
+app.delete("/routine", req => {
+  db.removeExercise(req.body);
 });
 
 app.listen(3000, () => console.log("listening on port 3000!"));

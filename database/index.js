@@ -29,5 +29,20 @@ const addExercise = input => {
   );
 };
 
+const removeExercise = input => {
+  //TO DO: more specificity on removing exercise from database
+  connection.query(
+    `delete from ${input.day.toLowerCase()} where exerciseName='${
+      input.exercise
+    }';`
+  ),
+    err => {
+      if (err) {
+        console.log(err);
+      }
+    };
+};
+
 module.exports.getRoutine = getRoutine;
 module.exports.addExercise = addExercise;
+module.exports.removeExercise = removeExercise;
