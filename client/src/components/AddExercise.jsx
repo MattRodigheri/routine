@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Dropzone from "react-dropzone";
+import styles from "../styles/App.css";
 
 class AddExercise extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class AddExercise extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="addExercise">
         <input
           type="text"
           name="exerciseName"
@@ -39,7 +40,7 @@ class AddExercise extends React.Component {
             return (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                {<p>Add Photo</p>}
+                <p>Add Photo</p>
               </div>
             );
           }}

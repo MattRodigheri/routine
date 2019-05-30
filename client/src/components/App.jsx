@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
-// import styles from "../styles/App.css";
+import styles from "../styles/App.css";
 import Buttons from "./Buttons.jsx";
 import AddExercise from "./AddExercise.jsx";
 import request from "superagent";
@@ -143,14 +143,15 @@ class App extends React.Component {
   render() {
     const exercises = this.state.workout.map((exercise, index) => {
       return (
-        <div key={index} draggable>
-          <span id={exercise.exerciseName}>
-            <img src={exercise.exercisePic} />
-            {`${exercise.exerciseName}: ${exercise.exerciseSets} sets of ${
+        <div key={index} id={exercise.exerciseName} className="exercise">
+          <div id={exercise.exerciseName}>
+            <div>{exercise.exerciseName}</div>
+            <img src={exercise.exercisePic} className="exercisePic" />
+            <div>{`${exercise.exerciseSets} sets of ${
               exercise.exerciseReps
-            }`}
-          </span>
-          <button onClick={() => this.removeExercise(event)}>X</button>
+            }`}</div>
+          </div>
+          <button onClick={() => this.removeExercise(event)}>Delete</button>
         </div>
       );
     });
@@ -169,11 +170,11 @@ class App extends React.Component {
     }
 
     return (
-      <div>
+      <div className="routine">
         <h1>{this.state.day}</h1>
         <Buttons addExerciseInput={this.addExerciseInput} />
         <div>{addExercise}</div>
-        <div className="exercise">{exercises}</div>
+        <div>{exercises}</div>
       </div>
     );
   }

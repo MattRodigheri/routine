@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../styles/App.css";
 
 class Buttons extends React.Component {
   constructor() {
@@ -7,7 +8,7 @@ class Buttons extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="buttons">
         <button onClick={() => this.props.addExerciseInput(true)}>
           Add Exercise
         </button>
