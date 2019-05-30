@@ -6,9 +6,7 @@ import Buttons from "./Buttons.jsx";
 import AddExercise from "./AddExercise.jsx";
 import Dropzone from "react-dropzone";
 import request from "superagent";
-
-const CLOUDINARY_UPLOAD_PRESET = "ehsddxdc";
-const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/mnr211/upload";
+import config from "../../../config.js";
 
 class App extends React.Component {
   constructor() {
@@ -132,8 +130,8 @@ class App extends React.Component {
 
   handleImageUpload(file) {
     let upload = request
-      .post(CLOUDINARY_UPLOAD_URL)
-      .field("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+      .post(config.CLOUDINARY_UPLOAD_URL)
+      .field("upload_preset", config.CLOUDINARY_UPLOAD_PRESET)
       .field("file", file);
 
     upload.end((err, response) => {
@@ -148,7 +146,7 @@ class App extends React.Component {
       }
     });
   }
-
+  // https://res.cloudinary.com/mnr211/image/upload/v1559080709/upqp9wddurpd3tvcmbyj.jpg
   render() {
     const exercises = this.state.workout.map((exercise, index) => {
       return (
