@@ -17,7 +17,8 @@ class App extends React.Component {
       addExercise: false,
       exerciseName: "",
       exerciseReps: "",
-      exerciseSets: ""
+      exerciseSets: "",
+      exerCisePic: ""
     };
 
     this.addExerciseInput = this.addExerciseInput.bind(this);
@@ -144,6 +145,7 @@ class App extends React.Component {
       return (
         <div key={index} draggable>
           <span id={exercise.exerciseName}>
+            <img src={exercise.exercisePic} />
             {`${exercise.exerciseName}: ${exercise.exerciseSets} sets of ${
               exercise.exerciseReps
             }`}
@@ -152,8 +154,8 @@ class App extends React.Component {
         </div>
       );
     });
-    let addExercise;
 
+    let addExercise;
     if (this.state.addExercise) {
       addExercise = (
         <AddExercise
