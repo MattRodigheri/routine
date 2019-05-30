@@ -17,10 +17,13 @@ const getRoutine = (data, callback) => {
 };
 
 const addExercise = input => {
+  console.log(input);
   connection.query(
-    `insert into ${input.day.toLowerCase()} (exerciseName, exerciseReps, exerciseSets) values ('${
+    `insert into ${input.day.toLowerCase()} (exerciseName,exerciseReps,exerciseSets,exercisePic) values ('${
       input.exerciseName
-    }', '${input.exerciseReps}', '${input.exerciseSets}');`,
+    }','${input.exerciseReps}',"${input.exerciseSets}","${
+      input.exercisePic
+    }");`,
     err => {
       if (err) {
         console.log(err);

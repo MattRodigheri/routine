@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Dropzone from "react-dropzone";
 
 class AddExercise extends React.Component {
   constructor(props) {
@@ -29,6 +30,20 @@ class AddExercise extends React.Component {
           placeholder="Sets"
           onChange={() => this.props.handleChange(event)}
         />
+        <Dropzone
+          onDrop={this.props.handleImageUpload}
+          accept="image/*"
+          multiple={false}
+        >
+          {({ getRootProps, getInputProps }) => {
+            return (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                {<p>Add Photo</p>}
+              </div>
+            );
+          }}
+        </Dropzone>
         <button onClick={this.props.addExerciseToDatabase}>Add</button>
         <button onClick={() => this.props.viewAddExercise(false)}>
           Cancel
