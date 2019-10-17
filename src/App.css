@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css?family=Knewave");
+
+h1 {
+  color: #ff4666;
+  text-align: center;
+  font-size: 4em;
+  font-family: Knewave;
+  -webkit-text-stroke: 2px black;
+}
+
+button {
+  float: right;
+}
+
+.buttons {
+  width: 75%;
+}
+
+.exercise {
+  color: #6646ff;
+  text-align: center;
+  font-size: 2em;
+  font-family: Knewave;
+  -webkit-text-stroke: 2px black;
+  width: 12em;
+  margin: 0 auto;
+}
+
+.exercisePic {
+  max-width: 10em;
+}
+
+.addExercise {
+  width: 45%;
+  margin: 0 auto;
+  clear: right;
+}
+
+p {
+  text-align: center;
+  font-family: Knewave;
+}
