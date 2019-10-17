@@ -70,9 +70,7 @@ class App extends React.Component {
   handleImageUpload(file) {
     let upload = request
       .post(process.env.REACT_APP_CLOUDINARY_UPLOAD_URL)
-      // .post("https://api.cloudinary.com/v1_1/mnr211/upload")
       .field("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET)
-      // .field("upload_preset", "ehsddxdc")
       .field("file", file);
 
     upload.end((err, response) => {
@@ -90,7 +88,7 @@ class App extends React.Component {
 
   addExerciseToDatabase() {
     axios
-      .post("/routine", {
+      .post("http://localhost:3001/api/routine", {
         day: this.state.day,
         exerciseName: this.state.exerciseName,
         exerciseReps: this.state.exerciseReps,
@@ -99,7 +97,9 @@ class App extends React.Component {
       })
       .then(
         axios
-          .get("/routine", { headers: { day: this.state.day } })
+          .get("http://localhost:3001/api/routine", {
+            headers: { day: this.state.day }
+          })
           .then(response => {
             this.setState({
               workout: response.data
@@ -119,7 +119,7 @@ class App extends React.Component {
   removeExercise(event) {
     // taking too long
     axios
-      .delete("/routine", {
+      .delete("http://localhost:3001/api/routine", {
         data: {
           day: this.state.day,
           exercise: event.target.previousSibling.id
@@ -127,7 +127,9 @@ class App extends React.Component {
       })
       .then(
         axios
-          .get("/routine", { headers: { day: this.state.day } })
+          .get("http://localhost:3001/api/routine", {
+            headers: { day: this.state.day }
+          })
           .then(response => {
             this.setState({
               workout: response.data
@@ -155,7 +157,7 @@ class App extends React.Component {
             />
             <div>{`${exercise.exerciseSets} sets of ${exercise.exerciseReps}`}</div>
           </div>
-          {/* <button onClick={() => this.removeExercise(event)}>Delete</button> */}
+          <button onClick={event => this.removeExercise(event)}>Delete</button>
         </div>
       );
     });

@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const db = require("./database");
+const router = express.Router();
 
-app.use(express.static(__dirname + "./../client/dist"));
+// app.use(express.static(__dirname + "./../client/dist"));
 app.use(express.json());
 
 app.get("/routine", (req, res) => {
@@ -23,5 +24,7 @@ app.post("/routine", req => {
 app.delete("/routine", req => {
   db.removeExercise(req.body);
 });
+
+app.use("/api", router);
 
 app.listen(3001, () => console.log("listening on port 3001!"));
