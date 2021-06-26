@@ -20,7 +20,7 @@ class App extends React.Component {
       exerciseSets: "",
       exercisePic: ""
     };
-
+//testing
     this.addExerciseInput = this.addExerciseInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
